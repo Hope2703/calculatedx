@@ -7,3 +7,7 @@ class Addition(Operation):
 class Soustraction(Operation):
     def calculer (self, a, b):
         return a - b    
+
+class Multiplication(Operation):
+    def calculer(self, a, b):
+        return a * b    
