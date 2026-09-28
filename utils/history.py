@@ -7,4 +7,4 @@ class Historique:
 
     @property
     def calculs(self):
-        return self._calculs
+        return self._calculs.copy()
