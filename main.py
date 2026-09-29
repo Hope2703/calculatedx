@@ -1,20 +1,4 @@
-def addition(a, b):
-    return a + b
-
-
-def soustraction(a, b):
-    return a - b
-
-
-def multiplication(a, b):
-    return a * b
-
-
-def division(a, b):
-    if b == 0:
-        raise ValueError("Division par zéro impossible.")
-
-    return a / b
+from engine.basic_calc import BasicCalculator
 
 
 def afficher_menu():
@@ -23,35 +7,63 @@ def afficher_menu():
     print("2. Soustraction")
     print("3. Multiplication")
     print("4. Division")
-    print("5. Quitter")
+    print("5. Historique")
+    print("0. Quitter")
 
 
 def main():
-    operations = {
-        "1": addition,
-        "2": soustraction,
-        "3": multiplication,
-        "4": division,
+    calculatrice = BasicCalculator()
+
+    choix_operations = {
+        "1": "+",
+        "2": "-",
+        "3": "*",
+        "4": "/",
     }
 
     while True:
         afficher_menu()
 
-        choix = input("Choisissez une opération : ")
+        choix = input("\nChoisissez une option : ")
 
-        if choix == "5":
-            print("À bientôt !")
+        if choix == "0":
+            print("Au revoir !")
             break
 
-        if choix not in operations:
-            print("Opération invalide.")
+        if choix == "5":
+            print("\n=== Historique ===")
+
+            calculs = calculatrice.historique.calculs
+
+            if not calculs:
+                print("Aucun calcul enregistré.")
+            else:
+                for calcul in calculs:
+                    print(
+                        calcul["operandes"][0],
+                        calcul["operation"],
+                        calcul["operandes"][1],
+                        "=",
+                        calcul["resultat"],
+                    )
+
+            continue
+
+        if choix not in choix_operations:
+            print("Choix invalide.")
             continue
 
         try:
             a = float(input("Premier nombre : "))
             b = float(input("Deuxième nombre : "))
 
-            resultat = operations[choix](a, b)
+            symbole = choix_operations[choix]
+
+            resultat = calculatrice.calculer(
+                symbole,
+                a,
+                b,
+            )
 
             print(f"Résultat : {resultat}")
 
